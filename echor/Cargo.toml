@@ -9,5 +9,5 @@ edition = "2021"
 clap = "2.33"
 
 [dev-dependencies]
-asser_cmd = "2.0.11"
+assert_cmd = "2.0.11"
 predicates = "3.0.3"
