@@ -62,13 +62,19 @@ pub fn run(config: Config) -> MyResult<()> {
         match open(&filename) {
             Err(err) => eprintln!("{}: {}", filename, err),
             Ok(file) => {
-                let mut line_num = 0;
-                for line_result in file.lines() {
-                    let line = line_result?;
-                    line_num += 1;
+                let mut last_num = 0;
+                for (line_num, line) in file.lines().enumerate() {
+                    let line = line?;
                     if config.number_lines {
-                        println!("{:6}\t{}", line_num, line);
-                    } else {
+                        println!("{:6}\t{}", line_num+1, line);
+                    } else if config.number_nonblank_lines  {
+                            if !line.is_empty() {
+                                last_num += 1;
+                                println!("{:6}\t{}", last_num, line);
+                            } else {
+                                println!();
+                            }
+                        } else {
                         println!("{}", line);
                     }
                 }
